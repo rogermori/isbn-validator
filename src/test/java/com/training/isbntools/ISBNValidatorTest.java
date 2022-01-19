@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ISBNValidatorTest {
 
     @Test
-    public void checkValidISBN() {
+    public void checkShortValidISBN() {
         ISBNValidator isbnValidator = new ISBNValidator();
         String isbn = "0140449116";
         boolean valid = isbnValidator.validateISBN(isbn);
@@ -17,7 +17,7 @@ public class ISBNValidatorTest {
     }
 
     @Test
-    public void checkValid13DigitsISBN() {
+    public void checkValidLongISBN() {
         ISBNValidator isbnValidator = new ISBNValidator();
         String isbn = "9781449509828";
         boolean valid = isbnValidator.validateISBN(isbn);
@@ -25,7 +25,16 @@ public class ISBNValidatorTest {
     }
 
     @Test
-    public void checkInvalidISBN() {
+    public void checkInvalidValidLongISBN() {
+        ISBNValidator isbnValidator = new ISBNValidator();
+        String isbn = "9781449509826";
+        boolean valid = isbnValidator.validateISBN(isbn);
+        assertFalse(valid,isbn);
+    }
+
+
+    @Test
+    public void checkInvalidShortISBN() {
         ISBNValidator isbnValidator = new ISBNValidator();
         boolean valid = isbnValidator.validateISBN("0140449117");
         assertFalse(valid);
@@ -40,7 +49,7 @@ public class ISBNValidatorTest {
     }
 
     @Test
-    public void nonNumericsISBNNotAllowed() {
+    public void nonNumericShortISBNNotAllowed() {
         ISBNValidator isbnValidator = new ISBNValidator();
         assertThrows(NumberFormatException.class,() -> {
             isbnValidator.validateISBN("helloworld");
@@ -48,7 +57,7 @@ public class ISBNValidatorTest {
     }
 
     @Test
-    public void ISBNNumbersEndingInXAreValid() {
+    public void shortISBNNumbersEndingInXAreValid() {
         ISBNValidator isbnValidator = new ISBNValidator();
         boolean valid = isbnValidator.validateISBN("012000030X");
         assertFalse(valid);
